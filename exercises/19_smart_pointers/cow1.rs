@@ -12,8 +12,6 @@
 //
 // Execute `rustlings hint cow1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 use std::borrow::Cow;
 
 fn abs_all<'a, 'b>(input: &'a mut Cow<'b, [i32]>) -> &'a mut Cow<'b, [i32]> {
@@ -29,6 +27,8 @@ fn abs_all<'a, 'b>(input: &'a mut Cow<'b, [i32]>) -> &'a mut Cow<'b, [i32]> {
 
 #[cfg(test)]
 mod tests {
+    use std::vec;
+
     use super::*;
 
     #[test]
@@ -48,7 +48,8 @@ mod tests {
         let slice = [0, 1, 2];
         let mut input = Cow::from(&slice[..]);
         match abs_all(&mut input) {
-            // TODO
+            Cow::Borrowed(vec) => Ok(assert_eq!(*vec, vec![0, 1, 2])),
+            _ => Err("Expected borrowed value"),
         }
     }
 
@@ -61,6 +62,8 @@ mod tests {
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
             // TODO
+            Cow::Owned(vec) => Ok(assert_eq!(*vec, vec![0, 1, 2])),
+            _ => Err("Expected owned value"),
         }
     }
 
@@ -73,6 +76,9 @@ mod tests {
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
             // TODO
+            // TODO
+            Cow::Owned(vec) => Ok(assert_eq!(*vec, vec![1, 0, 1])),
+            _ => Err("Expected owned value"),
         }
     }
 }
