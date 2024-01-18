@@ -44,6 +44,21 @@ impl Default for Person {
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let mut person = Person::default();
+        if s.len() == 0 {
+            return person;
+        }
+        let mut split = s.split(',');
+        let name = split.next().unwrap_or_default();
+        if name.len() == 0 {
+            return person;
+        }
+        let age = split.next().unwrap_or_default().parse::<usize>();
+        if let Ok(age) = age {
+            person.name = name.to_string();
+            person.age = age;
+        }
+        person
     }
 }
 
